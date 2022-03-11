@@ -21,6 +21,7 @@ public class TimerTest {
             @Override
             public void run() {
                 System.out.println("Hello");
+                // throw new RuntimeException("我裂开了");
             }
         };
 
@@ -53,12 +54,18 @@ public class TimerTest {
         /**
          * 原理
          * timer实例持有一个队列和一个任务轮询实例
+         * 队列：private final TaskQueue queue = new TaskQueue();
+         * 任务轮询线程：private final TimerThread thread = new TimerThread(queue);
          *
-         * 小顶堆，按nextExecutionTime排序，越小越在前
-         * private final TaskQueue queue = new TaskQueue();
+         * 调用schedule等重载方法安排任务时都会存储到队列中，并排好序
+         * 任务队列是一个小顶堆，按nextExecutionTime排序，越小越在前
          *
-         * 任务轮询线程
-         * private final TimerThread thread = new TimerThread(queue);
+         * TimerThread是一个任务轮询线程
+         * task = queue.getMin();
+         * 从源码中可以看出它总是先取出队列中的第一个任务执行，如果这个任务执行时间超过第二个任务的开始时间，那么就会影响后续任务的执行
+         * 还有TimerThread只捕获了InterruptedException中断异常，如果任务线程抛出其他异常而不处理，那么将导致轮询线程退出，后面所有任务都没得执行
+         *
+         *
          */
     }
 }
