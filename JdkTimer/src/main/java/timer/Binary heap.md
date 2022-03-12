@@ -19,7 +19,7 @@
 
 常见的堆实现为二叉堆（Binary Heap），其实际上是一颗二叉树（Binary Tree），并且是一颗完全二叉树（Complete Binary Tree）。如下图中展示了一个完全二叉的最大堆。
 
-![输入图片说明](D:\Github\JavaScheduledTaskLearn\JdkTimer\src\main\java\timer\Binary heap.assets\26232836_XxRr.png)
+![输入图片说明](https://github.com/qzh99/JavaScheduledTaskLearn/blob/main/imgs/26232836_XxRr.png)
 
 当堆被实现为完全二叉树时，其高度为最小高度。如果堆中有 n 个节点，则最小高度为 Θ(lg n)。
 
