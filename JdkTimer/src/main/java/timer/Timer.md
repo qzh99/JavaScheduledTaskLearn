@@ -1,3 +1,4 @@
+# Timer类注释
 ```java
 /*
  * Copyright (c) 1999, 2008, Oracle and/or its affiliates. All rights reserved.
@@ -760,13 +761,19 @@ class TaskQueue {
      * (by swapping it with its parent) repeatedly until queue[k]'s
      * nextExecutionTime is greater than or equal to that of its parent.
      * 此方法通过重复“提升”队列[k] 向上层级（通过与其父级交换）直到 queue[k] 的 nextExecutionTime 大于或等于其父级。
+     * 自己批准：
+     * 添加节点都是往数组的最后一个加，对应到小顶堆，就是往右子树加节点。从右子树处理到左子树
      */
     private void fixUp(int k) {
+        // 此处k为数组的最后一个元素的下标
         while (k > 1) {
-            int j = k >> 1;
+            int j = k >> 1;// 取父节点，第一次既根节点
+            // 如果根节点的nextExecutionTime小于队列最后一个nextExecutionTime说明已经排好序了
             if (queue[j].nextExecutionTime <= queue[k].nextExecutionTime)
                 break;
+            //交换位置
             TimerTask tmp = queue[j];  queue[j] = queue[k]; queue[k] = tmp;
+            //继续下一节点的比较（从右子树，往左子树比较）
             k = j;
         }
     }
@@ -784,16 +791,21 @@ class TaskQueue {
      * nextExecutionTime is less than or equal to those of its children.
      * 该方法通过重复“降级”队列[k] 向下层级（通过将其与其较小的子级交换）来发挥作用，
      * 直到队列[k] 的 nextExecutionTime 小于或等于其子级的那些。
+     * 自己批注：
+     * 移除根节点（最小值）时调用该方法，移除时直接把数组最后一个元素赋值给数组第一个元素，并把最后一个元素置为null
      */
     private void fixDown(int k) {
         int j;
         while ((j = k << 1) <= size && j > 0) {
             if (j < size &&
                 queue[j].nextExecutionTime > queue[j+1].nextExecutionTime)
-                j++; // j indexes smallest kid j 索引最小的节点
+                j++; // j indexes smallest kid （j 索引最小的节点）
+            //如果根节点的数据比右子节点数据小说明排序完成
             if (queue[k].nextExecutionTime <= queue[j].nextExecutionTime)
                 break;
+            //交换位置
             TimerTask tmp = queue[j];  queue[j] = queue[k]; queue[k] = tmp;
+            //下一轮
             k = j;
         }
     }
@@ -809,3 +821,5 @@ class TaskQueue {
     }
 }
 ```
+
+![小顶堆（最小堆）_Jav_15](https://s8.51cto.com/images/blog/202105/31/01b0408655ed171ace676dca2368deda.png)
