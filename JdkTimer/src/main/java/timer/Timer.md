@@ -822,4 +822,4 @@ class TaskQueue {
 }
 ```
 
-![小顶堆（最小堆）_Jav_15](./imgs/01b0408655ed171ace676dca2368deda.png)
+![小顶堆（最小堆）_Jav_15](https://github.com/qzh99/JavaScheduledTaskLearn/blob/main/imgs/01b0408655ed171ace676dca2368deda.png)
